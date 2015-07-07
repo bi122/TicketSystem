@@ -5,4 +5,5 @@
     <color name="mainBackground">#ffffff</color>
     <color name="colorAccent">#FFC107</color>
     <color name="ripple">#FFa187</color>
+    <color name="errorText">#ed1f24</color>
 </resources>

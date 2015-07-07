@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -33,7 +34,10 @@ public class AuthActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
+    void dosomethin(){
+        TableLayout tl = (TableLayout)findViewById(R.id.tbl_layout_auth);
+        tl.findViewById(R.id.error_row).setVisibility(View.VISIBLE);
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -42,6 +46,7 @@ public class AuthActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         Button btn = (Button) findViewById(R.id.btn_login);
+
         login = (EditText) findViewById(R.id.eTxt_user);
         pass = (EditText) findViewById(R.id.eTxt_pass);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +54,7 @@ public class AuthActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //тут указываем куда будем конектится, для примера я привел удаленных хост если у вас не получилось освоить wamp (:
-                new RequestTask().execute("http://dev.premium-dev.ru/index.php");
+                new RequestTask().execute("http://www.test-client.smrtp.ru/");
             }
         });
     }
@@ -95,12 +100,15 @@ public class AuthActivity extends AppCompatActivity {
                     Log.i(TAG, "in fanally");
                     urlConnection.disconnect();
                 }
-                //посылаем на вторую активность полученные параметры
-                Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-                //то что куда мы будем передавать и что, putExtra(куда, что);
-                Log.i("output", sb.toString());
-                intent.putExtra(MainActivity.JsonURL, sb.toString());
-                startActivity(intent);
+
+                //TODO сюда вставить разбор json auth и старт MainActivity
+                    /*посылаем на вторую активность полученные параметры
+                    Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+                    //то что куда мы будем передавать и что, putExtra(куда, что);
+                    Log.i("output", sb.toString());
+                    intent.putExtra(MainActivity.JsonURL, sb.toString());
+                    startActivity(intent);*/
+
             } catch (Exception e) {
                 System.out.println("Exp=" + e);
             }

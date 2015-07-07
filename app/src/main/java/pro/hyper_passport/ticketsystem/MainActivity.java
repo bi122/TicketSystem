@@ -37,14 +37,6 @@ public class MainActivity extends AppCompatActivity {
         String json = extras.getString(JsonURL);
         //передаем в метод парсинга
         JSONURL(json);
-        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View itemClicked, int position,
-                                    long id) {
-                Toast.makeText(getApplicationContext(), ((TextView) itemClicked).getText(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });*/
     }
 
     @Override
