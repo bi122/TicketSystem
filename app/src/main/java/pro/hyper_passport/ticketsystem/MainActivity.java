@@ -1,13 +1,19 @@
 package pro.hyper_passport.ticketsystem;
 
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,14 +21,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     public static String JsonURL;
     private static ArrayList<HashMap<String, Object>> myBooks;
-    private static final String FIRST = "firstname";
-    private static final String LAST = "lastname";
+    private static final String ELEMENT_NAME = "element_name";
+    private static final String ID = "id";
     public ListView listView;
+    public SupportCount supportCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +43,24 @@ public class MainActivity extends AppCompatActivity {
         String json = extras.getString(JsonURL);
         //передаем в метод парсинга
         JSONURL(json);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
+
+                String str  = ((TextView) itemClicked.findViewById(R.id.text1)).getText().toString();
+                String id_of_theme = myBooks.get(position).get("id").toString();
+                Toast.makeText(getApplicationContext(),
+                        id_of_theme,
+                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, ListProblemActivity.class);
+                startActivity(intent);
+            }
+        });
+        supportCount = new SupportCount();
+        supportCount.setValueThemes(myBooks.size());
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,26 +75,31 @@ public class MainActivity extends AppCompatActivity {
             //создали читателя json объектов и отдали ему строку - result
             JSONObject json = new JSONObject(result);
             //дальше находим вход в наш json им является ключевое слово data
-            JSONArray urls = json.getJSONArray("data");
+            JSONArray urls = json.getJSONArray("categories");
             //проходим циклом по всем нашим параметрам
             for (int i = 0; i < urls.length(); i++) {
                 HashMap<String, Object> hm;
                 hm = new HashMap<String, Object>();
                 //читаем что в себе хранит параметр firstname
-                hm.put(FIRST, urls.getJSONObject(i).getString("firstName").toString());
+
+                hm.put(ELEMENT_NAME, urls.getJSONObject(i).getString("Element_name").toString());
+                //потом supportCount используется при генерации заголовков SplitTabsView
+
+                supportCount.setNameThemes(urls.getJSONObject(i).getString("Element_name").toString());
                 //читаем что в себе хранит параметр lastname
-                hm.put(LAST, urls.getJSONObject(i).getString("lastName").toString());
+                hm.put(ID, urls.getJSONObject(i).getString("Element_id").toString());
                 myBooks.add(hm);
                 //дальше добавляем полученные параметры в наш адаптер
-                SimpleAdapter adapter = new SimpleAdapter(MainActivity.this, myBooks, R.layout.description_problem,
-                        new String[] { FIRST, LAST, }, new int[] { R.id.text1, R.id.text2 });
+                SimpleAdapter adapter = new SimpleAdapter(MainActivity.this, myBooks, R.layout.element_group_list,
+                        new String[] { ELEMENT_NAME, }, new int[] { R.id.text1 });
                 //выводим в листвью
-                Log.i("after"," creatind adapter");
+                Log.i(TAG," creating adapter");
                 listView.setAdapter(adapter);
                 listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
             }
         } catch (JSONException e) {
-            Log.e("log_tag", "Error parsing data " + e.toString());
+            Log.e(TAG, "Error parsing data " + e.toString());
         }
     }
 

@@ -26,10 +26,10 @@ public class ReaderJSON {
         int success = jsonObject.getInt("success");
         int code = jsonObject.getInt("code");
         int auth = jsonObject.getInt("auth");
-        if (success == 0 && code == 1 && auth == 0){
+        if (success == 0 && code == 1){
             result = false;
         }
-        else if (success == 1 && code == 0 && auth == 1){
+        else if (success == 1 && code == 0){
             result = true;
         }
         else {

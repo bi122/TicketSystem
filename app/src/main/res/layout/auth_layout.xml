@@ -44,15 +44,17 @@
                     android:layout_marginRight="16dp" />
 
                 <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:layout_alignEnd="@id/imgView_companyLogo"
                     android:layout_alignParentEnd="false"
                     android:layout_alignParentStart="false"
                     android:layout_alignStart="@id/imgView_companyLogo"
                     android:layout_toStartOf="@id/imgView_companyLogo"
                     android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp">
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:id="@+id/tbl_layout_auth">
 
                     <TableRow
                         android:layout_width="match_parent"
@@ -78,7 +80,8 @@
                             android:layout_column="2"
                             android:layout_weight="6"
                             android:enabled="true"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:layout_marginLeft="16dp" />
                     </TableRow>
 
                     <TableRow
@@ -106,10 +109,43 @@
                             android:layout_column="2"
                             android:layout_weight="6"
                             android:password="true"
-                            android:singleLine="true">
+                            android:singleLine="true"
+                            android:layout_marginLeft="16dp">
 
                         </EditText>
                     </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingTop="8dp"
+                        android:id="@+id/error_row"
+                        android:visibility="invisible">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imgView_iconError"
+                            android:layout_column="0"
+                            android:layout_weight="1"
+                            android:layout_gravity="left|center"
+                            android:src="@mipmap/ic_report_problem_red_24dp" />
+
+                        <TextView
+                            android:id="@+id/errorMessage"
+                            android:text="Неправильный логин или пароль,\nпопробуйте ещё раз"
+                            android:layout_column="2"
+                            android:layout_weight="6"
+                            android:textColor="@color/errorText"
+                            android:layout_marginLeft="16dp"
+                            android:autoText="false"
+                            android:editable="false"
+                            android:elegantTextHeight="false"
+                            android:textSize="12sp" />
+
+                    </TableRow>
+
+
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -121,18 +157,16 @@
                             android:id="@+id/btn_login"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
-                            android:text="Залогиниться"
+                            android:text="Войти"
                             android:layout_gravity="center"
                             android:background="@color/colorPrimary"
-                            android:clickable="true"
-                            android:enabled="true"
                             android:layout_column="3"
-                            android:paddingRight="08dp"
-                            android:paddingLeft="8dp"
+                            android:paddingRight="32dp"
+                            android:paddingLeft="32dp"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentEnd="true"
-                            style="@style/Widget.AppCompat.Button" />
+                            android:textColor="#fff" />
 
                     </RelativeLayout>
 
